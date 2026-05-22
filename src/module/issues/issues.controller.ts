@@ -6,7 +6,7 @@ const createIssues = async (req: Request, res: Response) => {
         const result = await issuesService.createIssuesIntoDB(req.body, req.user?.id)
         res.status(200).json({
             success: true,
-            message: "User registered successfully",
+            message: "Issue created successfully",
             data: result.rows[0]
         })
     } catch (error: any) {
@@ -18,6 +18,43 @@ const createIssues = async (req: Request, res: Response) => {
     }
 }
 
+const getAllIssues = async (req: Request, res: Response) => {
+    try {
+        const result = await issuesService.getAllIssuesFromDB()
+        res.status(200).json({
+            success: true,
+            message: "Issues retrieved successfully",
+            data: result.rows
+        })
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error
+        })
+    }
+}
+
+const getSingleIssue = async (req: Request, res: Response) => {
+    try {
+        const {id} = req.params
+        const result = await issuesService.getSingleIssueFromDB(id as string)
+        res.status(200).json({
+            success: true,
+            message: "Issues retrieved successfully",
+            data: result.rows
+        })
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error
+        })
+    }
+}
+
 export const issuesController = {
-    createIssues
+    createIssues,
+    getAllIssues,
+    getSingleIssue
 }

@@ -18,6 +18,25 @@ const createIssuesIntoDB = async(payload: Issue, user_id: number) =>{
         `,[reporter_id, title, description, type, status ?? 'open'])
     return result
 }
+
+const getAllIssuesFromDB = async () =>{
+const result = await pool.query(`
+        SELECT * FROM  issues
+    `)
+    return result
+}
+
+const getSingleIssueFromDB = async (id: string) => {
+    const result = pool.query(`
+            SELECT * FROM issues
+            WHERE id = $1
+        `,[id])
+    return result
+}
+
+
 export const issuesService = {
-    createIssuesIntoDB
+    createIssuesIntoDB,
+    getAllIssuesFromDB,
+    getSingleIssueFromDB
 } 
