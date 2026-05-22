@@ -29,6 +29,21 @@ const getSingleIssueFromDB = async (id: string) => {
     return result
 }
 
+const updateIssueFromDB = async(payload: Issue, id: string) =>{
+    const {title, description, type} = payload
+    const result = await pool.query(`
+            UPDATE issues
+            SET
+                title = COALESCE($1, title),
+                description = COALESCE($2, description),
+                type = COALESCE($3, type),
+                updated_at = NOW()
+            WHERE id = $4
+            RETURNING *
+        `,[title, description, type, id])
+        return result
+}
+
 const deleteIssueFromDB = async (id: string) => {
     const result = await pool.query(`
             DELETE FROM issues
@@ -42,5 +57,6 @@ export const issuesService = {
     createIssuesIntoDB,
     getAllIssuesFromDB,
     getSingleIssueFromDB,
-    deleteIssueFromDB
+    deleteIssueFromDB,
+    updateIssueFromDB
 } 

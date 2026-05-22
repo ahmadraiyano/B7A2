@@ -62,6 +62,32 @@ const getSingleIssue = async (req: Request, res: Response) => {
     }
 }
 
+const updateIssue = async (req: Request, res: Response) => {
+   try {
+        const {id} = req.params
+        const result = await issuesService.updateIssueFromDB(req.body, id as string)
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Issue data does not exist"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Issue updated successfully",
+            data: result.rows[0]
+        })
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error
+        })
+    } 
+}
+
 const deleteIssue = async (req: Request, res: Response) => {
     try {
         const {id} = req.params
@@ -91,5 +117,6 @@ export const issuesController = {
     createIssues,
     getAllIssues,
     getSingleIssue,
-    deleteIssue
+    deleteIssue,
+    updateIssue
 }
