@@ -4,3 +4,7 @@ export type SignUP = {
     password: string;
     role?: string
 }
+export type LogIn = {
+    email: string;
+    password: string
+}
