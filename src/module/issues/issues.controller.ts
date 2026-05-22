@@ -4,6 +4,7 @@ import { issuesService } from "./issues.service";
 const createIssues = async (req: Request, res: Response) => {
     try {
         const result = await issuesService.createIssuesIntoDB(req.body, req.user?.id)
+        
         res.status(200).json({
             success: true,
             message: "Issue created successfully",
@@ -39,10 +40,43 @@ const getSingleIssue = async (req: Request, res: Response) => {
     try {
         const {id} = req.params
         const result = await issuesService.getSingleIssueFromDB(id as string)
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Issue data does not exist"
+            })
+        }
+
         res.status(200).json({
             success: true,
-            message: "Issues retrieved successfully",
+            message: "Issue retrieved successfully",
             data: result.rows
+        })
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error
+        })
+    }
+}
+
+const deleteIssue = async (req: Request, res: Response) => {
+    try {
+        const {id} = req.params
+        const result = await issuesService.deleteIssueFromDB(id as string)
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "users data does not exist"
+            })
+        }
+        
+        res.status(200).json({
+            success: true,
+            message: "Issue deleted successfully"
         })
     } catch (error: any) {
         res.status(500).json({
@@ -56,5 +90,6 @@ const getSingleIssue = async (req: Request, res: Response) => {
 export const issuesController = {
     createIssues,
     getAllIssues,
-    getSingleIssue
+    getSingleIssue,
+    deleteIssue
 }
