@@ -1,18 +1,11 @@
-import express from "express"
-import cors from "cors"
-const app = express()
-const port = process.env.PORT || 5000
+import app from "./app";
+import config from "./config";
+import {initDB} from "./db"
 
-app.use(express.json())
-app.use(cors())
-
-app.get("/", (req,res)=>{
-    res.send({
-        success: true,
-        message: "The server is running"
-    })
+const main = () =>{
+    initDB()
+    app.listen(config.port, ()=>{
+    console.log(`app is running on port: ${config.port}`);
 })
-
-app.listen(port, ()=>{
-    console.log(`app is running on port: ${port}`);
-})
+}
+main()
