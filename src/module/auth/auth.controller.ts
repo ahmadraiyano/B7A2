@@ -31,7 +31,6 @@ const logInUser = async (req: Request, res: Response) =>{
         res.status(500).json({
             status: false,
             message: error.message,
-            error: error
         })
     }
 }

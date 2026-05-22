@@ -8,6 +8,7 @@ const auth = (...roles: Roles[]) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
             const token = req.headers.authorization
+            
             if (!token) {
                 res.status(401).json({
                     success: false,
@@ -33,7 +34,7 @@ const auth = (...roles: Roles[]) => {
                     message: "forbidden access"
                 })
             }
-            // req.user = decoded
+            req.user = decoded
             next()
         } catch (error) {
             next(error)
