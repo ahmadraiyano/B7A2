@@ -24,7 +24,7 @@ const getAllIssues = async (req: Request, res: Response) => {
         const result = await issuesService.getAllIssuesFromDB()
         res.status(200).json({
             success: true,
-            message: "Issues retrieved successfully",
+            message: "All issues retrieved successfully",
             data: result.rows
         })
     } catch (error: any) {
@@ -44,13 +44,13 @@ const getSingleIssue = async (req: Request, res: Response) => {
         if (result.rows.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: "Issue data does not exist"
+                message: "Issue data not found"
             })
         }
 
         res.status(200).json({
             success: true,
-            message: "Issue retrieved successfully",
+            message: "Single issue retrieved successfully",
             data: result.rows
         })
     } catch (error: any) {
@@ -70,13 +70,13 @@ const updateIssue = async (req: Request, res: Response) => {
         if (result.rows.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: "Issue data does not exist"
+                message: "Issue data not found"
             })
         }
 
         res.status(200).json({
             success: true,
-            message: "Issue updated successfully",
+            message: "Issue data updated successfully",
             data: result.rows[0]
         })
     } catch (error: any) {
@@ -96,13 +96,13 @@ const deleteIssue = async (req: Request, res: Response) => {
         if (result.rowCount === 0) {
             return res.status(404).json({
                 success: false,
-                message: "users data does not exist"
+                message: "Issue data not found"
             })
         }
         
         res.status(200).json({
             success: true,
-            message: "Issue deleted successfully"
+            message: "Issue data deleted successfully"
         })
     } catch (error: any) {
         res.status(500).json({

@@ -24,7 +24,7 @@ const logInUser = async (req: Request, res: Response) =>{
 
         res.status(200).json({
             success: true,
-            message: "user logged in successfully",
+            message: "User logged in successfully",
             data: result
         })
     } catch (error: any) {

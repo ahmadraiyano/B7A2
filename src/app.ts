@@ -5,7 +5,9 @@ import { issuesRoute } from "./module/issues/issues.route"
 const app: Application = express()
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: 'https://b7-a2-five.vercel.app'
+}))
 
 app.get("/", (req: Request, res: Response) => {
     res.send({
