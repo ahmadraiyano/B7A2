@@ -10,7 +10,7 @@ A RESTful Issue Tracker API built with Node.js, Express, TypeScript, and Postgre
 
 Add your deployed URL here:
 
-`https://b7-a2-five.vercel.app/`
+https://b7-a2-five.vercel.app/
 
 ---
 
@@ -20,7 +20,7 @@ Add your deployed URL here:
 * Role-based authorization (`maintainer`, `contributor`)
 * Create issues
 * Update issues
-* Get all issues with filtering and sorting
+* Get all issues
 * Protected routes with middleware
 * PostgreSQL database integration
 * Error handling and validation
