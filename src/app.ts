@@ -5,7 +5,7 @@ import { issuesRoute } from "./module/issues/issues.route"
 const app: Application = express()
 
 app.use(express.json())
-app.use(cors({ origin: 'http://localhost:3000' }))
+app.use(cors())
 
 app.get("/", (req: Request, res: Response) => {
     res.send({
