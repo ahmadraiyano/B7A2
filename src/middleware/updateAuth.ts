@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import { pool } from "../db";
+import sendResponse from "../utility/sendResponse";
 
 const updateAuth = () => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -19,26 +20,29 @@ const updateAuth = () => {
                 `, [issueId]);
 
             if (issueData.rows.length === 0) {
-                return res.status(404).json({
+                return sendResponse(res, {
+                    statusCode: 404,
                     success: false,
                     message: "Issue not found"
-                });
+                })
             }
 
             const issue = issueData.rows[0];
 
             if (issue.email !== userEmail) {
-                return res.status(403).json({
+                return sendResponse(res, {
+                    statusCode: 403,
                     success: false,
                     message: "You can only update your own issue"
-                });
+                })
             }
 
             if (issue.status !== "open") {
-                return res.status(403).json({
+                return sendResponse(res, {
+                    statusCode: 403,
                     success: false,
                     message: "Only open issues can be updated"
-                });
+                })
             }
 
             next();
